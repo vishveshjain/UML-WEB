@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASCII to UML Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>ASCII UML to Diagram</h1>
+    <p>Paste your ASCII UML diagram below and click Generate.</p>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST" action="/generate">
+        <textarea name="ascii_text" rows="20" cols="80" placeholder="Paste your ASCII UML here...">{{ ascii_text | default('', true) }}</textarea>
+        <br>
+        <button type="submit">Generate UML Diagram</button>
+    </form>
+
+    {% if image_filename %}
+        <div class="result">
+            <h2>Generated Diagram:</h2>
+            <img src="{{ url_for('static', filename='images/' + image_filename) }}" alt="Generated UML Diagram">
+            <p><a href="{{ url_for('static', filename='images/' + image_filename) }}" download>Download Image</a></p>
+        </div>
+    {% endif %}
+
+</body>
+</html>
